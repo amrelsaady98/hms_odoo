@@ -1,0 +1,109 @@
+<odoo>
+    <data>
+        <record id="view_patient_form" model="ir.ui.view">
+            <field name="name">patient </field>
+            <field name="model">hms.patient</field>
+            <field name="arch" type="xml">
+                <form string="patient">
+                    <header>
+                        <button name="action_undetermined" type="object"  class="btn-secondary" string="Undetermined"
+                            invisible="status != 'Critical'"/>
+                        <button name="action_good" type="object"  class="btn-secondary" string="Good"
+                            invisible="status != 'undetermined'"/>
+                        <button name="action_fair" type="object"  class="btn-secondary" string="Fair"
+                            invisible="status != 'good'"/>
+                        <button name="action_critical" type="object"  class="btn-secondary" string="Critical"
+                            invisible="status != 'fair'"/>
+
+                        <button name="action_add_log_wizard" type="object"  class="btn-secondary" string="Add log"/>
+                        <button name="action_print_patient_report" type="object"  class="btn-secondary" string="Print"/>
+
+                        <field name="status" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="first_name" required="True"/>
+                                <field name="last_name" required="True"/>
+                                <field name="email" required="True"/>
+                                <field name="birth_date"/>
+                                <field name="age" invisible="False"/>
+                                <field name="history" invisible="50 >= age"/>
+                            </group>
+                            <group>
+                                <field name="cr_ratio"/>
+                                <field name="blood_type"/>
+                                <field name="pcr"/>
+                                <field name="image"/>
+                                <field name="department"/>
+                                <field name="doctor" widget="many2many_tags_avatar" readonly="department == False"/>
+
+                            </group>
+                        </group>
+                        <notebook>
+                        <page string="Patient Log">
+                            <field name="patient_logs">
+                                <tree >
+                                    <field name="date"/>
+                                    <field name="created_by"/>
+                                    <field name="description"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+
+        <record id="view_patient_tree" model="ir.ui.view">
+            <field name="name">module.tree</field>
+            <field name="model">hms.patient</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="id"/>
+                    <field name="first_name"/>
+                    <field name="last_name"/>
+                    <field name="birth_date"/>
+                    <field name="address"/>
+                    <field name="blood_type"/>
+                    <field name="pcr"/>
+                    <field name="cr_ratio"/>
+                    <field name="history"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_patient_search" model="ir.ui.view">
+            <field name="name">module.search</field>
+            <field name="model">hms.patient</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="first_name"/>
+                    <field name="last_name"/>
+                </search>
+            </field>
+        </record>
+
+
+
+        <record id="action_patients" model="ir.actions.act_window">
+            <field name="name">Test</field>
+            <field name="res_model">hms.patient</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_patient_form"/>
+        </record>
+
+        <record id="action_patients_tree" model="ir.actions.act_window">
+            <field name="name">Patients</field>
+            <field name="res_model">hms.patient</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_patient_tree"/>
+            <field name="search_view_id" ref="view_patient_search"/>
+        </record>
+        <menuitem id="menu_patient_tree" name="All Patients" parent="menu_root_patient" action="action_patients_tree"/>
+<!--        <menuitem id="menu_patient_add_log" name="Add log" parent="menu_root_patient" action="action_patient_log_wizard"/>-->
+    </data>
+</odoo>

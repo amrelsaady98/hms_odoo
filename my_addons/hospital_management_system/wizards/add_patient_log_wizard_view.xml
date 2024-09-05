@@ -1,0 +1,28 @@
+<odoo>
+    <record id="view_patient_log_wizard_form" model="ir.ui.view">
+            <field name="name">patient.log.wizard.form</field>
+            <field name="model">hms.add.patient.log</field>
+            <field name="arch" type="xml">
+                <form string="Add Patient Log">
+                    <sheet>
+                        <group>
+                            <field name="patient_id" invisible="True"/>
+                            <field name="description"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button string="Save" type="object" name="action_create_log" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_patient_log_wizard" model="ir.actions.act_window">
+            <field name="name">Add Patient Log</field>
+            <field name="res_model">hms.add.patient.log</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_patient_log_wizard_form"/>
+            <field name="target">new</field>
+        </record>
+</odoo>

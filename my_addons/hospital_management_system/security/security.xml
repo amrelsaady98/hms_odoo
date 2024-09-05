@@ -1,0 +1,16 @@
+<odoo>
+
+    <record id="hospital_management_system.model_hms" model="ir.module.category">
+        <field name="name">HMS Groups</field>
+    </record>
+
+    <record id="group_hms_user" model="res.groups">
+        <field name="name">HMS User</field>
+        <field name="category_id" ref="hospital_management_system.model_hms"/>
+    </record>
+
+    <record id="group_hms_manager" model="res.groups">
+        <field name="name">HMS Manager</field>
+        <field name="category_id" ref="hospital_management_system.model_hms"/>
+    </record>
+</odoo>

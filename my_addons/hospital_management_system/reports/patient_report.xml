@@ -1,0 +1,59 @@
+<odoo>
+
+    <template id="report_hms_patient_status">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <h2>Patient Status Report</h2>
+                    <p><strong>Name:</strong> <t t-esc="o.name"/></p>
+                    <p><strong>Age:</strong> <t t-esc="o.age"/></p>
+                    <p><strong>Department:</strong> <t t-esc="o.department.name"/></p>
+
+                    <p><strong>Birth date:</strong> <t t-esc="o.birth_date"/></p>
+                    <p><strong>PCR:</strong> <t t-esc="o.pcr"/></p>
+                    <p><strong>Blood Type:</strong> <t t-esc="o.blood_type"/></p>
+<!--                    <p><strong>Email:</strong> <t t-esc="o.email"/></p>-->
+                    <p><strong>User Date Info:</strong> <t t-esc="o.create_date"/></p>
+                    <p><strong>Log History:</strong></p>
+
+                        <table border="1" cellpadding="15">
+                            <tr>
+                                <th>Description</th>
+                                <th>Date</th>
+                            </tr>
+                            <t t-foreach="o.patient_logs" t-as="log">
+                            <tr >
+                                <td><t t-esc="log.description"/></td>
+                                <td><t t-esc="log.date"/></td>
+                            </tr>
+                            </t>
+                        </table>
+
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_hms_patient_status" model="ir.actions.report">
+        <field name="name">Patient Status Report</field>
+        <field name="model">hms.patient</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hospital_management_system.report_hms_patient_status</field>
+        <field name="report_file">your_module_name.report_hms_patient_status</field>
+        <field name="print_report_name">'Patient Status Report - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="hospital_management_system.model_hms_patient"/>
+        <field name="binding_type">report</field>
+    </record>
+
+
+    <report
+        id="action_report_hms_patient_status"
+        model="hms.patient"
+        string="Patient Status Report"
+        report_type="qweb-pdf"
+        name="hospital_management_system.report_hms_patient_status"
+        file="your_module_name.report_hms_patient_status"
+        attachment_use="False"
+    />
+
+</odoo>
