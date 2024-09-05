@@ -44,6 +44,7 @@ package.json
 addons
 addons/**
 addons/
+./addons/
 
 # various virtualenv
 /bin/
